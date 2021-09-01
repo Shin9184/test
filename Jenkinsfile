@@ -70,5 +70,13 @@ pipeline {
                 }
             }
         }
+        stage ( 'Run Docker') {
+            steps {
+                def dockerRun = 'docker run -p 8080:8080 -d --name myspring tlqkddk123/spring:3'
+                sshagent(['test-web']) {
+                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@3.34.94.137 ${dockerRun}'
+                }
+            }
+        }
     }
 }
