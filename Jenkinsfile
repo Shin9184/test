@@ -43,15 +43,12 @@ pipeline {
                 git branch: 'master', credentialsId: 'Shin9184', url: 'https://github.com/Shin9184/test.git'
             }
         }
-        stage('Gradle Junit Test') {
-            steps {
-                sh "chmod +x gradlew; ./gradlew test"
-            }
-        }
-        stage('Gradle Build ') {
+        stage('Gradle Build & Junit Test') {
             steps {
                 sh 'chmod +x ./gradlew'
                 sh './gradlew clean build'
+                sh 'chmod +x gradlew'
+                sh './gradlew test'
             }
         }
         stage('Publish test results') {
@@ -64,19 +61,22 @@ pipeline {
                 script {
                     checkout scm
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                        def customImage = docker.build("tlqkddk123/spring:${env.BUILD_ID}")
-                        customImage.push()
+                        def customImage = docker.build("tlqkddk123/spring")
+                        customImage.push("${env.BUILD_ID}")
+                        customImage.push("latest")
                     }
                 }
             }
         }
-        stage ('Run Docker') {
+        stage ('Deploy & Run Docker') {
             steps {
                 script {
-                    def dockerRun = "docker run -p 8080:8080 -d --name myspring tlqkddk123/spring:3"
+                    def newDockerRun = "docker run -p 8080:8080 -d --name myspring tlqkddk123/spring:${env.BUILD_ID}"
+                    def lastDockerRun = "docker rm -f myspring"
                     sshagent(['test-web']) {
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@3.34.94.137 ${dockerRun}"
-                  }
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@3.38.99.210 ${lastDockerRun}"
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@3.38.99.210 ${newDockerRun}"
+                    }
                 }
             }
         }
