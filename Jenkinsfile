@@ -60,7 +60,6 @@ pipeline {
             }
         }
         stage ('Push image') {
-            agent any
             steps {
                 script {
                     checkout scm
