@@ -68,14 +68,13 @@ pipeline {
                 }
             }
         }
-        stage ('Deploy & Run Docker') {
+        
+        stage('ArgoCD Deploy') {
             steps {
                 script {
-                    def newDockerRun = "docker run -p 8080:8080 -d --name myspring tlqkddk123/spring:${env.BUILD_ID}"
-                    def lastDockerRun = "docker rm -f myspring"
-                    sshagent(['test-web']) {
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@3.38.99.210 ${lastDockerRun}"
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@3.38.99.210 ${newDockerRun}"
+                    sshagent (credentials: ['argoCD']) {
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@3.35.220.0 argocd repo add https://github.com/tlqkddk123/spring.git"
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@3.35.220.0 argocd app create test --repo https://github.com/tlqkddk123/spring.git --sync-policy automated --path templates --dest-server https://kubernetes.default.svc --dest-namespace default"
                     }
                 }
             }
