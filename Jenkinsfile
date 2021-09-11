@@ -40,7 +40,7 @@ pipeline {
     stages {
         stage('Git Progress') {
             steps {
-                git branch: 'master', credentialsId: 'Shin9184', url: 'https://github.com/Shin9184/test.git'
+                git branch: 'master', credentialsId: 'github-cred', url: 'https://github.com/Shin9184/test.git'
             }
         }
         stage('Gradle Build & Junit Test') {
