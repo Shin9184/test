@@ -68,16 +68,5 @@ pipeline {
                 }
             }
         }
-        
-        stage('ArgoCD Deploy') {
-            steps {
-                script {
-                    sshagent (credentials: ['argoCD']) {
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@3.35.220.0 argocd repo add https://github.com/tlqkddk123/spring.git"
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@3.35.220.0 argocd app create test --repo https://github.com/tlqkddk123/spring.git --sync-policy automated --path templates --dest-server https://kubernetes.default.svc --dest-namespace default"
-                    }
-                }
-            }
-        }
     }
 }
