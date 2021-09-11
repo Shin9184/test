@@ -40,7 +40,7 @@ pipeline {
     stages {
         stage('Git Progress') {
             steps {
-                git branch: 'master', credentialsId: 'github-cred', url: 'https://github.com/Shin9184/test.git'
+                git branch: 'master', credentialsId: 'Shin9184', url: 'https://github.com/Shin9184/test.git'
             }
         }
         stage('Gradle Build & Junit Test') {
@@ -60,7 +60,7 @@ pipeline {
             steps {
                 script {
                     checkout scm
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'tlqkddk123') {
                         def customImage = docker.build("tlqkddk123/spring")
                         customImage.push("${env.BUILD_ID}")
                         customImage.push("latest")
