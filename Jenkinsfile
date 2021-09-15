@@ -74,7 +74,7 @@ pipeline {
                 snykSecurity(
                     snykInstallation: 'snyk-latest',
                     snykTokenId: 'snykAPI',
-                    sh 'snyk container test tlqkddk123/spring'
+                    //sh 'snyk container test tlqkddk123/spring'
                 )
             }
         }
