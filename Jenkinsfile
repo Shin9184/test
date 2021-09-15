@@ -43,6 +43,7 @@ pipeline {
                 git branch: 'master', credentialsId: 'Shin9184', url: 'https://github.com/Shin9184/test.git'
             }
         }
+        
         stage('Gradle Build & Junit Test') {
             steps {
                 sh 'chmod +x ./gradlew'
@@ -51,11 +52,13 @@ pipeline {
                 sh './gradlew test'
             }
         }
+        
         stage('Publish test results') {
             steps {
                 junit '**/build/test-results/test/*.xml'
             }
         }
+        
         stage ('Push image') {
             steps {
                 script {
@@ -69,15 +72,21 @@ pipeline {
             }
         }
         
-        stage ('Snyk Test') {
+        stage('snyk dependency scan') {
+            tools {
+                snyk 'snyk-latest'
+            }	
             steps {
-                snykSecurity snykInstallation: 'Please define a Snyk installation in the Jenkins Global Tool Configuration. This task will not run without a Snyk installation.', snykTokenId: 'snykAPI'
-                //snykSecurity(
-                    //snykInstallation: 'snyk-latest',
-                    //snykTokenId: 'snykAPI',
-                    //sh 'snyk container test tlqkddk123/spring'
-                //)
+                snykSecurity(
+                organisation: 'sds38839184',
+                severity: 'high',
+                snykInstallation: 'snyk-latest',
+                snykTokenId: 'snykAPI',
+                //targetFile: 'requirements.txt',
+                failOnIssues: 'true'
+                )		
             }
         }
+        
     }
 }
