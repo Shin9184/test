@@ -71,11 +71,12 @@ pipeline {
         
         stage ('Snyk Test') {
             steps {
-                snykSecurity(
-                    snykInstallation: 'snyk-latest',
-                    snykTokenId: 'snykAPI',
+                snykSecurity snykInstallation: 'Please define a Snyk installation in the Jenkins Global Tool Configuration. This task will not run without a Snyk installation.', snykTokenId: 'snykAPI'
+                //snykSecurity(
+                    //snykInstallation: 'snyk-latest',
+                    //snykTokenId: 'snykAPI',
                     //sh 'snyk container test tlqkddk123/spring'
-                )
+                //)
             }
         }
     }
