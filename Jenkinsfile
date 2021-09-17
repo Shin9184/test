@@ -80,7 +80,7 @@ pipeline {
             steps {
                 script {
                     echo 'Testing...'
-                    snykSecurity failOnIssues: false, snykInstallation: 'snyk',snykTokenId: 'fuck', targetFile: 'Dockerfile'
+                    snykSecurity failOnIssues: false, snykInstallation: 'snyk',snykTokenId: 'snykAPI', targetFile: 'Dockerfile'
                 }
             }
         }
