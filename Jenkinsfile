@@ -72,9 +72,9 @@ pipeline {
             }
         }
         
-        stage('install'){
-            sh 'npm install' // Dependency Installation stage
-        }
+        //stage('install'){
+            //sh 'npm install' // Dependency Installation stage
+        //}
         
         stage('snyk dependency scan') {
             steps {
