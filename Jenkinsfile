@@ -79,7 +79,8 @@ pipeline {
         stage('snyk dependency scan') {
             steps {
                 echo 'Testing...'
-                snykSecurity snykInstallation: 'snyk', snykTokenId: 'snykAPI'
+                sh 'snyk auth 79408715-cbd0-475d-a191-79cfe9a60f09'
+                sh 'snyk container test tlqkddk123/spring'
             }
         }
         
