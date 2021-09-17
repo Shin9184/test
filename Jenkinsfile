@@ -80,7 +80,7 @@ pipeline {
             steps {
                 echo 'Testing...'
                 snykSecurity organisation: 'sds38839184', snykInstallation: 'snyk', snykTokenId: 'snykAPI'
-                snyk container test tlqkddk123/spring:latest
+                snyk container test tlqkddk123/spring
             }
         }
         
