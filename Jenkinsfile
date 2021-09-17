@@ -80,8 +80,7 @@ pipeline {
             steps {
                 script {
                     echo 'Testing...'
-                    sh 'snyk auth 79408715-cbd0-475d-a191-79cfe9a60f09'
-                    sh 'snyk container test tlqkddk123/spring'
+                    snykSecurity failOnIssues: false, snykInstallation: 'snyk', snykTokenId: 'snykAPI'
                 }
             }
         }
