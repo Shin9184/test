@@ -78,8 +78,8 @@ pipeline {
         
         stage('snyk dependency scan') {
             steps {
-                echo 'Testing...'
-                snykSecurity organisation: 'sds38839184', snykInstallation: 'snyk', snykTokenId: 'snykAPI', targetFile:'/var/jenkins_home/workspace/snyk/Dockerfile'
+                echo 'Testing...
+                snykSecurity snykInstallation: 'snyk', snykTokenId: 'snykAPI', targetFile: 'Dockerfile'
             }
         }
         
