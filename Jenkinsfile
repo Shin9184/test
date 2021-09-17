@@ -79,8 +79,7 @@ pipeline {
         stage('snyk dependency scan') {
             steps {
                 echo 'Testing...'
-                snykSecurity organisation: 'sds38839184', snykInstallation: 'snyk', snykTokenId: 'snykAPI'
-                sh 'snyk container test tlqkddk123/spring'
+                snykSecurity organisation: 'sds38839184', snykInstallation: 'snyk', snykTokenId: 'snykAPI', targetfile:/var/jenkins_home/workspace/snyk/Dockerfile
             }
         }
         
