@@ -72,19 +72,14 @@ pipeline {
             }
         }
         
+        stage('install'){
+            sh 'npm install' // Dependency Installation stage
+        }
+        
         stage('snyk dependency scan') {
-            tools {
-                snyk 'snyk-latest'
-            }	
             steps {
-                snykSecurity(
-                organisation: 'sds38839184',
-                severity: 'high',
-                snykInstallation: 'snyk-latest',
-                snykTokenId: 'snykAPI',
-                //targetFile: 'requirements.txt',
-                failOnIssues: 'true'
-                )		
+                echo 'Testing...'
+                snykSecurity organisation: 'sds38839184', snykInstallation: 'snyk', snykTokenId: 'snykAPI', targetFile: 'Dokerfile'
             }
         }
         
