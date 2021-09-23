@@ -72,18 +72,29 @@ pipeline {
             }
         }
         
+        stage ('Anchore test') {
+            steps {
+                script {
+                    def imageLine = 'tlqkddk123/spring:latest'
+                    writeFile file: 'tlqkddk123/spring', text: imageLine
+                    anchore name: 'tlqkddk123/spring', engineCredentialsId: 'anchore', bailOnFail: false
+                    }
+                }
+            }
+        }
+        
         //stage('install'){
             //sh 'npm install' // Dependency Installation stage
         //}
         
-        stage('snyk dependency scan') {
-            steps {
-                script {
-                    echo 'Testing...'
-                    snykSecurity failOnIssues: false, snykInstallation: 'snyk',snykTokenId: 'snykAPI', targetFile: 'Dockerfile'
-                }
-            }
-        }
+        //stage('snyk dependency scan') {
+            //steps {
+                //script {
+                    //echo 'Testing...'
+                    //snykSecurity failOnIssues: false, snykInstallation: 'snyk',snykTokenId: 'snykAPI', targetFile: 'Dockerfile'
+                //}
+            //}
+        //}
         
     }
 }
