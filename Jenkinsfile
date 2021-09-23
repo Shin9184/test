@@ -38,7 +38,6 @@ pipeline {
                     def imageLine = 'tlqkddk123/spring:latest'
                     writeFile file: 'tlqkddk123/spring', text: imageLine
                     anchore name: 'tlqkddk123/spring', engineCredentialsId: 'anchore', bailOnFail: false
-                    }
                 }
             }
         }
