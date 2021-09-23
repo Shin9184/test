@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script {
                     checkout scm
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'tlqkddk123') {
                         def customImage = docker.build("tlqkddk123/spring")
                         customImage.push("${env.BUILD_ID}")
                         customImage.push("latest")
