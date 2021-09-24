@@ -14,11 +14,32 @@ pipeline {
                 sh './gradlew test'
             }
         }
+        
         stage('Publish test results') {
             steps {
                 junit '**/build/test-results/test/*.xml'
             }
         }
+        
+        stage('SonarQube') {
+            steps {
+                script {
+                    withSonarQubeEnv(credentialsId: 'sonar') {
+                        sh" ./gradlew sonarqube \
+                        -Dsonar.projectKey=test \
+                        -Dsonar.host.url=http://3.36.70.16:9000 \
+                        -Dsonar.login=271b326d433564e84e0ec987febd36f2aacf5099"
+                    }
+                }
+            }
+        }
+        
+        stage('OWASP Dependency-Check') {
+            steps {
+                dependencyCheck additionalArguments: '-s "./" -f "HTML" -o "./" --prettyPrint', odcInstallation: 'dependency'
+            }
+        }
+        
         stage ('Push image') {
             steps {
                 script {
